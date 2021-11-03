@@ -12,3 +12,12 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS =[]
+
+class Company(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField()
+    description = models.TextField(max_length=255)
+    timestamp = models.DateField(auto_now_add=True)
+
+
+
