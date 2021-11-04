@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,Company
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,3 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+
+
+
+
+        
