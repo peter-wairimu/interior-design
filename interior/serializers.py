@@ -22,8 +22,12 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['title','description','timestamp']
 
-
+        
 
 
         

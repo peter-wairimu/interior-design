@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer,CompanySerializer
 from rest_framework.response import Response
-from .models import User
+from .models import User,Company
 import jwt,datetime
-
-
+from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 
 
 class RegisterView(APIView):
@@ -79,6 +80,34 @@ class LogoutView(APIView):
 
         return response
         
+@csrf_exempt
+def company_list(request):
+    if request.method == 'GET':
+        companies = Company.objects.all()
+        serializer = CompanySerializer(companies, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
-        
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = CompanySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = CompanySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        data = JSONParser().parse(request)
+        serializer = CompanySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
 
